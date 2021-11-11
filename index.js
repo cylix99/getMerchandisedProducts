@@ -10,7 +10,7 @@ exports.handler = async (opt, context, cb) => {
     params = opt.params?.querystring;
   }
   let cmc = xss(params.cmc) || "uk";
-  let data = ebay.results({ cmc });
+  let data = await ebay.results(cmc);
   return {
     statusCode: 200,
     body: JSON.stringify(data),
