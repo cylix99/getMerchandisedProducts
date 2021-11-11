@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "axios": "^0.24.0",
+    "ebay-oauth-nodejs-client": "^1.2.1"
+  }
+}
