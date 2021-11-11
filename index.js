@@ -1,6 +1,7 @@
 const axios = require("axios");
 const EbayAuthToken = require("ebay-oauth-nodejs-client");
 const marketplaceList = require("./marketplace.json");
+const xss = require("xss");
 
 const ebayAuthToken = new EbayAuthToken({
   clientId: process.env.CLIENT_ID,
@@ -21,10 +22,10 @@ let token = null;
 
 exports.handler = async (opt, context, cb) => {
   let cmc = xss(params.cmc);
-  let results = results({ cmc });
+  let data = results({ cmc });
   return {
     statusCode: 200,
-    body: JSON.stringify(results),
+    body: JSON.stringify(data),
   };
 
   async function results(params) {
