@@ -10,7 +10,10 @@ const ebayAuthToken = new EbayAuthToken({
 
 const getAppToken = async () => {
   try {
-    const token = await ebayAuthToken.getApplicationToken("PRODUCTION");
+    const token = await ebayAuthToken.getApplicationToken(
+      "PRODUCTION",
+      "https://api.ebay.com/oauth/api_scope/buy.marketing"
+    );
 
     return token && JSON.parse(token);
   } catch (error) {
@@ -20,7 +23,7 @@ const getAppToken = async () => {
 
 let token = null;
 
-async function results(cmc) {
+async function results(cmc, limit) {
   let cached = true;
   let today = new Date();
   if (token === null || (token.created && token.created !== today.getHours())) {
@@ -32,8 +35,7 @@ async function results(cmc) {
   let marketPlaceDetails = await getMarketplaceDetails(cmc);
 
   if (token) {
-    let url =
-      "https://api.ebay.com/buy/marketing/v1_beta/merchandised_product?metric_name=BEST_SELLING&category_id=31388";
+    let url = `https://api.ebay.com/buy/marketing/v1_beta/merchandised_product?metric_name=BEST_SELLING&category_id=31388&limit=${limit}`;
 
     let affiliateReferenceId = marketPlaceDetails.EbayAffiliateCampaignIdVs;
 
@@ -67,7 +69,7 @@ const getMarketplaceDetails = (cmc) =>
     if (isUndefined(cmc)) {
       // set US as default
       let marketPlaceDetail = marketplaceList.Marketplace.filter(
-        (x) => x.Cmc === "us"
+        (x) => x.Cmc === "uk"
       )[0];
       resolve(marketPlaceDetail);
     } else {

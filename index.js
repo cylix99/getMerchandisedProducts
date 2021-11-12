@@ -10,7 +10,8 @@ exports.handler = async (opt, context, cb) => {
     params = opt.params?.querystring;
   }
   let cmc = xss(params.cmc) || "uk";
-  let data = await ebay.results(cmc);
+  let limit = xss(params.limit) || 10;
+  let data = await ebay.results(cmc, limit);
   return {
     statusCode: 200,
     body: JSON.stringify(data),
