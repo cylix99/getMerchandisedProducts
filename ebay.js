@@ -23,7 +23,7 @@ const getAppToken = async () => {
 
 let token = null;
 
-async function results(cmc, limit) {
+async function results(cmc, limit, id) {
   let cached = true;
   let today = new Date();
   if (token === null || (token.created && token.created !== today.getHours())) {
@@ -35,7 +35,7 @@ async function results(cmc, limit) {
   let marketPlaceDetails = await getMarketplaceDetails(cmc);
 
   if (token) {
-    let url = `https://api.ebay.com/buy/marketing/v1_beta/merchandised_product?metric_name=BEST_SELLING&category_id=31388&limit=${limit}`;
+    let url = `https://api.ebay.com/buy/marketing/v1_beta/merchandised_product?metric_name=BEST_SELLING&category_id=${id}&limit=${limit}`;
 
     let affiliateReferenceId = marketPlaceDetails.EbayAffiliateCampaignIdVs;
 
