@@ -6,8 +6,11 @@ const ebay = require("./ebay");
 
 exports.handler = async (opt, context, cb) => {
   let params = opt;
-  if (opt.params?.querystring) {
+  if (params?.querystring) {
     params = opt.params?.querystring;
+  }
+  if (params?.queryStringParameters) {
+    params = params?.queryStringParameters;
   }
   let cmc = xss(params.cmc) || "uk";
   let limit = xss(params.limit) || 10;
